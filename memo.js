@@ -54,7 +54,7 @@ function calculateKeySorted(){
 }
 
 function calculateKeyToLowerCase(){
-    let args = Array.from(arguments).sort();    
+    let args = Array.from(arguments);    
     return JSON.stringify(args).toLowerCase();
 }
 
