@@ -1,0 +1,76 @@
+<html>
+
+<script src="memo.js"> </script>
+
+<body>
+Open console!!!!
+
+</body>
+
+<script>
+function sum(a,b){
+    console.log("calculating "+a+" + "+b);
+    return a+b;
+}
+
+let memo = new Memo(sum);
+
+console.log(memo.call(1,2)); //call sum
+
+console.log(memo.call(1,2)); //no call sum
+
+console.log(memo.call(2,3)); //call sum
+
+console.log(memo.call(2,1)); //call sum
+
+let storeMemoCache = memo.getCache(); //export cache values to string
+
+
+let memo2 = new Memo(sum);
+
+memo2.loadCache(storeMemoCache); //load cache
+
+console.log(memo2.call(1,2)); //no call sum
+
+memo.add(memo.calculateKey(3,3), 7); //add value 3,3 = 7
+
+console.log(memo.call(3,3)); //no call sum, result 7
+
+
+let memo3 = new Memo(sum, calculateKeySorted); //calculateKeySorted 
+
+console.log(memo3.call(2,3)); //call sum
+
+console.log(memo3.call(2,3)); //no call sum
+
+console.log(memo3.call(3,2)); //no call sum
+
+
+let memoTime = new MemoTime(sum, 2000);
+console.log(memoTime.call(4,5));
+
+console.log(memoTime.call(4,5)); //no call sum
+setTimeout(memoTime.call(4,5),1000); //no call sum
+setTimeout(memoTime.call(4,5),3000); //call sum
+
+
+function factorial(n){
+    console.log("factorial "+n);
+    if(n < 2){
+        return 1;
+    } else {
+        return factorial(n-1);
+    }
+}
+
+let factM = new Memo(factorial);
+
+
+factorial = (n) => factM.call(n);
+
+factorial(3);
+factorial(5);
+
+</script>
+
+</html>
